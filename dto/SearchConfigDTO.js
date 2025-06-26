@@ -6,14 +6,12 @@ export class SearchConfigDTO {
         formName,
         fields,
         endpoint,
-        searchButtonText = 'Buscar',
         mutuallyExclusiveGroups = []
     }) {
         this.formName = formName;
-        this.fields = fields; // Array de objetos com { name, placeholder, type, mutuallyExclusive }
+        this.fields = fields; // Array de objetos com { name, type? }
         this.endpoint = endpoint;
-        this.searchButtonText = searchButtonText;
-        this.mutuallyExclusiveGroups = mutuallyExclusiveGroups; // Array de arrays com nomes dos campos
+        this.mutuallyExclusiveGroups = mutuallyExclusiveGroups;
         
         this.validate();
     }
@@ -38,10 +36,6 @@ export class SearchConfigDTO {
         }
 
         // Valida os grupos mutuamente exclusivos
-        if (!Array.isArray(this.mutuallyExclusiveGroups)) {
-            throw new Error('mutuallyExclusiveGroups deve ser um array');
-        }
-
         this.mutuallyExclusiveGroups.forEach((group, groupIndex) => {
             if (!Array.isArray(group)) {
                 throw new Error(`Grupo ${groupIndex} deve ser um array`);

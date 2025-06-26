@@ -1,12 +1,8 @@
-import { ISearchService } from '../interfaces/ISearchService.js';
-
 /**
  * Serviço de busca
- * Implementa Single Responsibility Principle
  */
-export class SearchService extends ISearchService {
+export class SearchService {
     constructor(httpClient = fetch) {
-        super();
         this.httpClient = httpClient;
     }
     

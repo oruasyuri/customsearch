@@ -1,24 +1,22 @@
 import { SearchConfigDTO } from '../dto/SearchConfigDTO.js';
 import { URLStateManager } from '../services/URLStateManager.js';
 import { SearchService } from '../services/SearchService.js';
-import { SearchFormRenderer } from '../components/SearchFormRenderer.js';
+import { SearchFormConnector } from '../components/SearchFormConnector.js';
 import { SearchController } from '../controllers/SearchController.js';
 
 /**
- * Factory para criação do sistema de busca
- * Implementa Factory Pattern e Dependency Injection
+ * Factory para conectar sistema de busca a formulários existentes
  */
 export class SearchFactory {
-    static createSearchSystem(configData, containerId) {
-        // Cria o DTO de configuração
+    static connectToForm(configData) {
         const config = new SearchConfigDTO(configData);
         
-        // Cria as dependências
+        // Cria dependências
         const stateManager = new URLStateManager();
         const searchService = new SearchService();
-        const renderer = new SearchFormRenderer(containerId);
+        const connector = new SearchFormConnector(config.formName); // Usa document.forms[formName]
         
-        // Cria e retorna o controlador
-        return new SearchController(config, stateManager, searchService, renderer);
+        // Retorna controlador conectado
+        return new SearchController(config, stateManager, searchService, connector);
     }
 }
